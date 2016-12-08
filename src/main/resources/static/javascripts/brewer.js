@@ -1,13 +1,7 @@
 $(function() {
-	var configMask = {
-		decimal : ',',
-		thousands : '.'
-	};
+	var decimal = $('.js-decimal');
+	decimal.maskMoney({decimal: ',', thousands: '.', allowZero: true});
 	
-	$('.js-decimal').maskMoney(configMask);
-        
-        // acrescento mais um atributo ao objeto
-	configMask.precision = 0;
-	
-	$('.js-plain').maskMoney(configMask);
+	var plain = $('.js-plain');
+	plain.maskMoney({ precision: 0, thousands: '.' });
 });

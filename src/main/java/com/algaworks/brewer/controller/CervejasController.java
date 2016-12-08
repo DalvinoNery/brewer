@@ -34,31 +34,26 @@ public class CervejasController {
 	 */
 	@RequestMapping("/cerveja/novo")
 	public ModelAndView novo(Cerveja cerveja) {
+		
 		ModelAndView mv = new ModelAndView("cerveja/cadastro/index");
+		
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("origens", Origem.values());
+		
 		return mv;
 	}
 
 	@RequestMapping(value = "/cerveja/novo", method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
-		System.out.println("sku "+cerveja.getSku());
-		System.out.println("nome "+cerveja.getNome());
-		System.out.println("descricao "+cerveja.getDescricao());
-		System.out.println("estilo "+cerveja.getEstilo().getCodigo());
-		System.out.println("origem "+cerveja.getOrigem());
-		System.out.println("sabor "+cerveja.getSabor());
-		System.out.println("estoque "+cerveja.getQuantidadeEstoque());
-		System.out.println("comissao "+cerveja.getComissao());
-		System.out.println("teor "+cerveja.getTeorAlcoolico());
-		System.out.println("valor "+cerveja.getValor());
+		
 		if (result.hasErrors()) {
 			return novo(cerveja);
 		}
-
+		
 		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucessso!");
+		
 		return new ModelAndView("redirect:/cerveja/novo");
 	}
 
