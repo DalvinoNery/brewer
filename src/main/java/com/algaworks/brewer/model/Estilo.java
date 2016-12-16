@@ -24,7 +24,7 @@ public class Estilo implements Serializable{
 	private Long codigo;
 	
 	@NotBlank(message="O nome é obrigatório")
-	@Size(min=5, max=15, message = "O nome deve conter de {min} a {max} caracteres")
+	@Size(max=15, message = "O nome deve conter no {max} caracteres")
 	private String nome;
 	
 	
