@@ -1,7 +1,8 @@
 package com.algaworks.brewer.config.init;
 
-
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -15,42 +16,56 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class<?>[]{JPAConfig.class, ServiceConfig.class};
+		return new Class<?>[] { JPAConfig.class, ServiceConfig.class };
 	}
 
-	/*Informa a classe de configuração dos controller
-	 * (non-Javadoc)
-	 * @see org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer#getServletConfigClasses()
+	/*
+	 * Informa a classe de configuração dos controller (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.support.
+	 * AbstractAnnotationConfigDispatcherServletInitializer#
+	 * getServletConfigClasses()
 	 */
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class <?>[]{WebConfig.class};
+		return new Class<?>[] { WebConfig.class };
 	}
 
-	/*Diz o padrão da url que será entregue para o dispached. "/" qualquer url dentro da aplicação. 
-	 * Equivale ao urlMappins do web.xml
-	 * (non-Javadoc)
-	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#getServletMappings()
+	/*
+	 * Diz o padrão da url que será entregue para o dispached. "/" qualquer url
+	 * dentro da aplicação. Equivale ao urlMappins do web.xml (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.support.
+	 * AbstractDispatcherServletInitializer#getServletMappings()
 	 */
 	@Override
 	protected String[] getServletMappings() {
 		// TODO Auto-generated method stub
-		return new String[]{"/"};
+		return new String[] { "/" };
 	}
-	
-	/*Configuração uft-8
-	 * (non-Javadoc)
-	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#getServletFilters()
+
+	/*
+	 * Configuração uft-8 (non-Javadoc)
+	 * 
+	 * @see org.springframework.web.servlet.support.
+	 * AbstractDispatcherServletInitializer#getServletFilters()
 	 */
-	 @Override
+	@Override
 	protected Filter[] getServletFilters() {
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
-		
-		return new Filter[]{characterEncodingFilter};
+
+		return new Filter[] { characterEncodingFilter };
 	}
 
-	
+	/*
+	 * Configuração do upload da foto
+	 */
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setMultipartConfig(new MultipartConfigElement(""));
+	}
+
 }
