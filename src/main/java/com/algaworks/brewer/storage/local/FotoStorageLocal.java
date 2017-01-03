@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.algaworks.brewer.storage.FotoStorage;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
+
 /*
  * Classe de configuração para salvar as fotos no upload no diretório especificado.
  */
@@ -62,6 +65,35 @@ public class FotoStorageLocal implements FotoStorage {
 		}
 	}
 
+	@Override
+	/*
+	 * move a foto da pasta temp para pata principal (.brewerfotos)
+	 */
+	public void salvar(String foto) {
+		//movendo a foto
+		try {
+			Files.move(this.localTemporario.resolve(foto), this.local.resolve(foto));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro ao mover a foto para destino final!", e);
+		}
+		//redimencionando a foto
+		try {
+			Thumbnails.of(this.local.resolve(foto).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		} catch (IOException e) {
+			throw new RuntimeException("Erro ao gerar thumbnail!", e);
+		}
+		
+	} 
+	
+	@Override
+	public byte[] recuperar(String nome) {
+		try {
+			return Files.readAllBytes(this.local.resolve(nome));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro lendo a foto."+e);
+		}
+	}
+	
 	private void criarPastas() {
 		try {
 			Files.createDirectories(this.local);
@@ -90,5 +122,9 @@ public class FotoStorageLocal implements FotoStorage {
 		}
 		return nomeNovo;
 	}
+
+	
+
+	
 
 }
