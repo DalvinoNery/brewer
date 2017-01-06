@@ -1,4 +1,4 @@
-package com.algaworks.brewer.repository.converter;
+package com.algaworks.brewer.controller.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.util.StringUtils;
@@ -14,6 +14,7 @@ public class EstiloConverter implements Converter<String, Estilo> {
 			estilo.setCodigo(Long.valueOf(codigo));
 			return estilo;
 		}
+		
 		return null;
 	}
 

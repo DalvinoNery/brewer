@@ -5,7 +5,7 @@
 	layout:decorate="~{layout/layout-padrao}"
 	xmlns:brewer="http://brewer.algaworks.com">
 <head>
-	<title>Pesquisa de Estilo</title>
+	<title>Pesquisa de Cidade</title>
 </head>
 <body>
 	<section layout:fragment="conteudo">
@@ -13,13 +13,13 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-10">
-						<h1>Pesquisa de Estilo</h1>
+						<h1>Pesquisa de Cidade</h1>
 					</div>
 			
 					<div class="col-sm-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-default" th:href="@{/estilos/novo}">
-								<i class="glyphicon glyphicon-plus-sign"></i><span class="hidden-xs hidden-sm"> Novo estilo </span>
+							<a class="btn btn-default" th:href="@{/cidades/nova}">
+								<i class="glyphicon glyphicon-plus-sign"></i><span class="hidden-xs hidden-sm"> Nova Cidades </span>
 							</a>
 						</div>
 					</div>
@@ -29,9 +29,18 @@
 		
 		<div class="container-fluid">
 
-			<form method="GET" th:object="${estiloFilter}">
+			<form method="GET" th:object="${cidadeFilter}">
 				<div class="row">
-					<div class="col-sm-12 form-group bw-requered">
+					<div class="col-sm-4 bw-requered" brewer:classforerror="estado">
+						<label for="estado" class="control-label">Estado</label> 
+						<div class="bw-field-action">
+							<select id="estado" class="form-control" th:field="*{estado}">
+								<option value="">Selecione um Estado</option>
+								<option th:each="estado : ${estados}" th:value="${estado.codigo}" th:text="${estado.nome}">São Paulo</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-8 form-group bw-requered">
 						<label for="nome" class="control-label">Nome</label> 
 						<input id="nome" type="text" class="form-control" autofocus="autofocus" th:field="*{nome}">
 					</div>
@@ -42,19 +51,20 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="table-estilos-col-codigo">
-								<brewer:order page="${pagina}" field="codigo" text="Código"/>
-							</th>
+							
 							<th class="table-estilos-col-nome">
 								<brewer:order page="${pagina}" field="nome" text="Nome"/>
+							</th>
+							<th class="table-estilos-col-estado">
+								<brewer:order page="${pagina}" field="estado" text="Estado"/>
 							</th>
 							<th class="table-estilos-col-acoes"></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="estilo : ${pagina.conteudo}">
-							<td class="text-center" th:text="${estilo.codigo}"></td>
-							<td th:text="${estilo.nome}"></td>
+						<tr th:each="cidade : ${pagina.conteudo}">
+							<td th:text="${cidade.nome}"></td>
+							<td class="text-center" th:text="${cidade.estado.nome}"></td>
 							<td class="text-center">
 								<a class="btn  btn-link  btn-xs" title="Editar"> 
 									<i class="glyphicon glyphicon-pencil"></i>
@@ -65,7 +75,7 @@
 							</td>
 						</tr>
 						<tr th:if="${pagina.vazia}">
-							<td colspan="7">Nenhum estilo encontrado.</td>
+							<td colspan="7">Nenhuma cidade encontrada.</td>
 						</tr>
 					</tbody>
 				</table>
