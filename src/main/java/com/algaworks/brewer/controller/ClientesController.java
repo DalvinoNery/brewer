@@ -16,12 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.controller.page.PageWrapper;
 import com.algaworks.brewer.model.Cliente;
-import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.model.TipoPessoa;
 import com.algaworks.brewer.repository.Clientes;
 import com.algaworks.brewer.repository.Estados;
 import com.algaworks.brewer.repository.filter.ClienteFilter;
-import com.algaworks.brewer.repository.filter.EstiloFilter;
 import com.algaworks.brewer.service.CadastroClienteService;
 import com.algaworks.brewer.service.exception.CpfCnpjClienteJaCadastradoException;
 
