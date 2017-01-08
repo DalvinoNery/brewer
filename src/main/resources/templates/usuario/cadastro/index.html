@@ -2,17 +2,31 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/layout-padrao'">
+	layout:decorate="~{layout/layout-padrao}"
+	xmlns:brewer="http://brewer.algaworks.com">
 <head>
 	<title>Cadastro de Usuário</title>
 	
 	<link rel="stylesheet" type="text/css"	th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+
 </head>
 <body>
 	<section layout:fragment="conteudo">
 		<div class="page-header">
 			<div class="container-fluid">
-				<h1>Cadastro de Usuário</h1>
+				<div class="row">
+					<div class="col-sm-10">
+						<h1>Cadastro de Usuário</h1>
+					</div>
+					
+					<div class="col-sm-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/usuarios}">
+								<i class="glyphicon glyphicon-search"></i><span class="hidden-xs hidden-sm"> Pesquisar Usuários </span>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -20,59 +34,60 @@
 
 			
 
-			<form method="POST" th:object="${cerveja}" class="form-vertical  js-form-loading">
+			<form method="POST" th:object="${usuario}" class="form-vertical  js-form-loading">
+				<brewer:message/>
 				<div class="row">
-					<div class="col-sm-12 form-group">
-						<label for="nome">Nome</label> 
-						<input id="nome" type="text" class="form-control" autofocus="autofocus"/>
+					<div class="col-sm-12 form-group bw-requered" brewer:classforerror="nome">
+						<label for="nome" class="control-label">Nome</label> 
+						<input id="nome" type="text" class="form-control" autofocus="autofocus"  th:field="*{nome}"/>
 					</div>
 				</div>
 				
 				<div class="row">
 					
-					<div class="col-sm-8 form-group">
-						<label for="email">Email</label> 
-						<input id="email" type="text" class="form-control" />
+					<div class="col-sm-8 form-group" brewer:classforerror="email">
+						<label for="email" class="control-label">Email</label> 
+						<input id="email" type="text" class="form-control" th:field="*{email}"/>
 					</div>
 					
-					<div class="col-sm-4 form-group">
-						<label for="dataNascimento">Data de Nascimento</label> 
-						<input id="dataNascimento" type="text" class="form-control" />
+					<div class="col-sm-4 form-group" brewer:classforerror="dataNascimento">
+						<label for="dataNascimento" class="control-label">Data de Nascimento</label> 
+						<input id="dataNascimento" type="text" class="form-control js-date" th:field="*{dataNascimento}" 
+						data-provide="datepicker" data-date-orientation="bottom" data-date-language="pt-BR"
+						data-date-autoclose="true" autocomplete="off"/>
 					</div>
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-4 form-group">
-						<label for="senha">Senha</label> 
-						<input id="senha" type="password" class="form-control" />
+					<div class="col-sm-4 form-group" brewer:classforerror="senha" th:classappend="${usuario.novo} ? bw-requered">
+						<label for="senha"  class="control-label">Senha</label> 
+						<input id="senha" type="password" class="form-control" th:field="*{senha}"/>
 					</div>
-					<div class="col-sm-4 form-group">
-						<label for="confirmacaoSenha">Confirmação de Senha</label> 
-						<input id="confirmacaoSenha" type="password" class="form-control" />
+					<div class="col-sm-4 form-group" brewer:classforerror="confirmacaoSenha">
+						<label for="confirmacaoSenha"  class="control-label">Confirmação de Senha</label> 
+						<input id="confirmacaoSenha" type="password" class="form-control" th:field="*{confirmacaoSenha}" />
 					</div>
 					<div class="col-sm-4 form-group">
 						<label for="complemento">Status</label> 
 						<div>
 							<div>
-								<input type="checkbox" class="js-status" 
-								 data-size="small" data-off-color="danger" data-on-text="Ativo" data-off-text="Inativo"/>
+								<input type="checkbox" class="js-status" data-size="small" data-off-color="danger"
+								 data-on-text="Ativo" data-off-text="Inativo" th:field="*{ativo}"/>
 							</div>
 						</div>
 					</div>
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-4 form-group">
-						<label for="grupos">grupos</label> 
+					<div class="col-sm-4 form-group bw-requered" brewer:classforerror="grupos">
+						<label for="grupos" class="control-label">Grupos</label> 
 						<div>
+						<th:block th:each="grupo : ${grupos}">
 							<div class="checkbox  checkbox-inline"> 
-								<input type="checkbox" />
-								<label>Administrador</label>
+								<input type="checkbox" th:value="${grupo.codigo}" th:field="*{grupos}"/>
+								<label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">Administrador</label>
 							</div>
-							<div class="checkbox  checkbox-inline"> 
-								<input type="checkbox" />
-								<label>Vendedor</label>
-							</div>
+						</th:block>
 						</div>
 					</div>
 					
@@ -84,6 +99,7 @@
 	</section>
 	<th:block layout:fragment="javascript-extra">
 		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+		
 		<script>
 			$('.js-status').bootstrapSwitch(); 
 		
