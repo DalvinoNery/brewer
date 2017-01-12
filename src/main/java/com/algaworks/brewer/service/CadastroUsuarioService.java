@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.algaworks.brewer.model.StatusUsuario;
 import com.algaworks.brewer.model.Usuario;
 import com.algaworks.brewer.repository.Usuarios;
 import com.algaworks.brewer.service.exception.EmailJaCadastradoException;
@@ -39,6 +40,12 @@ public class CadastroUsuarioService {
 		}
 		
 		return usuarios.save(usuario);
+	}
+
+	@Transactional
+	public void alterarStatus(Long[] codigos, StatusUsuario statusUsuario) {
+		statusUsuario.executar(codigos, usuarios);
+		
 	}
 	
 }

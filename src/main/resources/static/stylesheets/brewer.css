@@ -165,6 +165,54 @@ font-size: 500px;
 	
 }
 
+
+
+/* Colunas - Pesquisa de Usuários */
+
+.table-usuarios-col-status-selecao {
+	width: 30px;
+}
+
+.table-usuarios-col-nome {
+	
+}
+
+.table-usuarios-col-email {
+	text-align: center;
+}
+
+.table-usuarios-col-grupos {
+}
+
+.table-usuarios-col-status {
+	
+	text-align: center;
+}
+.table-usuarios-col-acoes {
+	width: 80px;
+}
+
+.table-usuarios-col-status-selecao{
+	text-align: center;
+}
+
+/* Tabela Cervejas página de Venda */
+.bw-tabela-cervejas {
+	margin-bottom: 15px;
+}
+
+.bw-tabela-cervejas__vazio {
+	padding: 15px 15px;
+	
+	border: 1px dashed #ddd;
+	
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 300;
+	color: #555;
+}
+
+
 /*
 ######################################
 # CUSTOMIZAÇÃO DE COMPONENTES
